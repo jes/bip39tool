@@ -19,8 +19,10 @@ def help():
     print "INPUT format is detected automatically. Either mnemonic words or 32-byte entropy are acceptable."
     print
     print "Examples:"
-    print "  (test vectors from https://github.com/trezor/python-mnemonic/blob/master/vectors.json)"
     print "  bip39tool -o words --generate"
+    print "  bip39tool -o seed picnic scene hundred elite stairs modify hero apple popular stick weekend security"
+    print
+    print "  (test vectors from https://github.com/trezor/python-mnemonic/blob/master/vectors.json)"
     print "  bip39tool -o words 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f"
     print "  bip39tool -o entropy legal winner thank year wave sausage worth useful legal winner thank yellow"
     print "  bip39tool -o seed --passphrase TREZOR 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f"

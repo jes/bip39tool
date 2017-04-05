@@ -27,8 +27,10 @@ See `bip39tool --help`:
     INPUT format is detected automatically. Either mnemonic words or 32-byte entropy are acceptable.
     
     Examples:
-      (test vectors from https://github.com/trezor/python-mnemonic/blob/master/vectors.json)
       bip39tool -o words --generate
+      bip39tool -o seed picnic scene hundred elite stairs modify hero apple popular stick weekend security
+
+      (test vectors from https://github.com/trezor/python-mnemonic/blob/master/vectors.json)
       bip39tool -o words 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f
       bip39tool -o entropy legal winner thank year wave sausage worth useful legal winner thank yellow
       bip39tool -o seed --passphrase TREZOR 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f
