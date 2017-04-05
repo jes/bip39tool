@@ -10,7 +10,7 @@ Use `pip` to install `mnemonic`:
 
     pip install mnemonic
 
-and then either use `bip39tool` directly or copy it into your path:
+and then either use `bip39tool` straight from this directory, or copy it into your path:
 
     cp bip39tool ~/bin
 
