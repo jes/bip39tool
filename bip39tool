@@ -1,0 +1,83 @@
+#!/usr/bin/env python
+
+import sys, getopt
+import re
+from mnemonic import Mnemonic
+from binascii import hexlify, unhexlify
+
+def usage():
+    print "Usage: bip39tool [-o words|seed|entropy] [-p PASSPHRASE] INPUT"
+
+def help():
+    usage()
+    print ""
+    print "Options:"
+    print "  -o,--output       Output format (words,seed,entropy). Default: seed"
+    print "  -p,--passphrase   Passphrase. Only relevant with \"-o seed\". Default: (empty string)"
+    print
+    print "INPUT format is detected automatically. Either mnemonic words or 32-byte entropy are acceptable."
+    print
+    print "Examples:"
+    print "  (test vectors from https://github.com/trezor/python-mnemonic/blob/master/vectors.json)"
+    print "  bip39tool -o words 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f"
+    print "  bip39tool -o entropy legal winner thank year wave sausage worth useful legal winner thank yellow"
+    print "  bip39tool -o seed -p TREZOR 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f"
+    print "  bip39tool -o seed -p TREZOR legal winner thank year wave sausage worth useful legal winner thank yellow"
+    print
+    print "Help:"
+    print "  See the github project at https://github.com/jes/bip39tool"
+    print "  Please email james@incoherency.co.uk if you want to get in touch"
+
+def main(argv):
+    if len(argv) == 0:
+        usage()
+        print "See --help for more info"
+        sys.exit(1)
+
+    try:
+        opts, args = getopt.getopt(argv, "ho:l:p:", ["help","output=","passphrase="])
+    except getopt.GetoptError:
+        usage()
+        print "See --help for more info"
+        sys.exit(1)
+
+    outputtype = 'seed'
+    passphrase = ''
+
+    for opt, arg in opts:
+        if opt in ("-h", "--help"):
+            help()
+            sys.exit(0)
+        elif opt in ("-o", "--output"):
+            outputtype = arg
+        elif opt in ("-p", "--passphrase"):
+            passphrase = arg
+
+    inputtxt = ' '.join(args)
+    inputtype = 'words'
+    if re.match("^[0-9a-fA-F]{32}$", inputtxt):
+        inputtype = 'entropy'
+
+    entropy = inputtxt
+
+    mnemo = Mnemonic('english')
+
+    if inputtype == 'words':
+        # the reason to convert words to entropy and then straight back again
+        # is to sanity-check the words, e.g. in the case of words input and
+        # words output
+        entropy = hexlify(mnemo.to_entropy(inputtxt))
+
+    words = mnemo.to_mnemonic(unhexlify(entropy))
+
+    if outputtype == 'seed':
+        print hexlify(Mnemonic.to_seed(words, passphrase))
+    elif outputtype == 'words':
+        print words
+    elif outputtype == 'entropy':
+        print hexlify(mnemo.to_entropy(words))
+    else:
+        sys.exit("Don't recognise output type " + outputtype)
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
