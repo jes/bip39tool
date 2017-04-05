@@ -39,3 +39,24 @@ See `bip39tool --help`:
     Help:
       See the github project at https://github.com/jes/bip39tool
       Please email james@incoherency.co.uk if you want to get in touch
+
+## Generating Bitcoin keys and addresses
+
+Use `pip` to install `bip32utils`:
+
+    pip install bip32utils
+
+Use `bip39tool` to generate entropy however you like and store it in a file (`entropy.txt`), e.g.:
+
+    bip39tool -o entropy picnic scene hundred elite stairs modify hero apple popular stick weekend security > entropy.txt
+
+You need to know in advance which derivation path you want to use. And note that `bip32gen` does not currently seem to support
+hardened derivation. Read the [BIP32 spec](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) to learn
+more about key derivation.
+
+Use `bip32gen` from the `bip32utils` package to get a Bitcoin address, corresponding private key, and xprv and xpub keys:
+
+    bip32gen -i entropy -f entropy.txt -o addr m/44/0/0
+    bip32gen -i entropy -f entropy.txt -o wif m/44/0/0
+    bip32gen -i entropy -f entropy.txt -o xprv m/44/0
+    bip32gen -i entropy -f entropy.txt -o xpub m/44/0
