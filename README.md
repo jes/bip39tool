@@ -24,7 +24,7 @@ See `bip39tool --help`:
       -o,--output       Output format (words,seed,entropy). Default: seed
       -p,--passphrase   Passphrase. Only relevant with output format "seed". Default: (empty string)
     
-    INPUT format is detected automatically. Either mnemonic words or 16-byte entropy are acceptable.
+    INPUT format is detected automatically. Either mnemonic words or hex-encoded entropy are acceptable.
     
     Examples:
       bip39tool -o words --generate

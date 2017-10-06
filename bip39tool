@@ -16,7 +16,7 @@ def help():
     print "  -o,--output       Output format (words,seed,entropy). Default: seed"
     print "  -p,--passphrase   Passphrase. Only relevant with output format \"seed\". Default: (empty string)"
     print
-    print "INPUT format is detected automatically. Either mnemonic words or 16-byte entropy are acceptable."
+    print "INPUT format is detected automatically. Either mnemonic words or hex-encoded entropy are acceptable."
     print
     print "Examples:"
     print "  bip39tool -o words --generate"
@@ -62,7 +62,7 @@ def main(argv):
 
     inputtxt = ' '.join(args)
     inputtype = 'words'
-    if re.match("^[0-9a-fA-F]{32}$", inputtxt):
+    if re.match("^[0-9a-fA-F]+$", inputtxt):
         inputtype = 'entropy'
 
     entropy = inputtxt
