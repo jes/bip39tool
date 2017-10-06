@@ -79,7 +79,11 @@ def main(argv):
         # the reason to convert words to entropy and then straight back again
         # is to sanity-check the words, e.g. in the case of words input and
         # words output
-        entropy = hexlify(mnemo.to_entropy(inputtxt))
+        try:
+            entropy = hexlify(mnemo.to_entropy(inputtxt))
+        except ValueError as e:
+            sys.stderr.write("Sanity check of input words failed: " + e.message + "\n")
+            sys.exit(1)
 
     words = mnemo.to_mnemonic(unhexlify(entropy))
 
