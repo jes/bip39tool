@@ -6,43 +6,43 @@ from mnemonic import Mnemonic
 from binascii import hexlify, unhexlify
 
 def usage():
-    print "Usage: bip39tool [-g] [-o words|seed|entropy] [-p PASSPHRASE] [INPUT]"
+    print("Usage: bip39tool [-g] [-o words|seed|entropy] [-p PASSPHRASE] [INPUT]")
 
 def help():
     usage()
-    print ""
-    print "Options:"
-    print "  -g,--generate     Generate entropy instead of reading it from INPUT."
-    print "  -o,--output       Output format (words,seed,entropy). Default: seed"
-    print "  -p,--passphrase   Passphrase. Only relevant with output format \"seed\". Default: (empty string)"
-    print
-    print "INPUT format is detected automatically. Either mnemonic words or hex-encoded entropy are acceptable."
-    print
-    print "Examples:"
-    print "  bip39tool -o words --generate"
-    print "  bip39tool -o seed picnic scene hundred elite stairs modify hero apple popular stick weekend security"
-    print
-    print "  (test vectors from https://github.com/trezor/python-mnemonic/blob/master/vectors.json)"
-    print "  bip39tool -o words 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f"
-    print "  bip39tool -o entropy legal winner thank year wave sausage worth useful legal winner thank yellow"
-    print "  bip39tool -o seed --passphrase TREZOR 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f"
-    print "  bip39tool -o seed --passphrase TREZOR legal winner thank year wave sausage worth useful legal winner thank yellow"
-    print
-    print "Help:"
-    print "  See the github project at https://github.com/jes/bip39tool"
-    print "  Please email james@incoherency.co.uk if you want to get in touch"
+    print("")
+    print("Options:")
+    print("  -g,--generate     Generate entropy instead of reading it from INPUT.")
+    print("  -o,--output       Output format (words,seed,entropy). Default: seed")
+    print("  -p,--passphrase   Passphrase. Only relevant with output format \"seed\". Default: (empty string)")
+    print()
+    print("INPUT format is detected automatically. Either mnemonic words or hex-encoded entropy are acceptable.")
+    print()
+    print("Examples:")
+    print("  bip39tool -o words --generate")
+    print("  bip39tool -o seed picnic scene hundred elite stairs modify hero apple popular stick weekend security")
+    print()
+    print("  (test vectors from https://github.com/trezor/python-mnemonic/blob/master/vectors.json)")
+    print("  bip39tool -o words 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f")
+    print("  bip39tool -o entropy legal winner thank year wave sausage worth useful legal winner thank yellow")
+    print("  bip39tool -o seed --passphrase TREZOR 7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f7f")
+    print("  bip39tool -o seed --passphrase TREZOR legal winner thank year wave sausage worth useful legal winner thank yellow")
+    print()
+    print("Help:")
+    print("  See the github project at https://github.com/jes/bip39tool")
+    print("  Please email james@incoherency.co.uk if you want to get in touch")
 
 def main(argv):
     if len(argv) == 0:
         usage()
-        print "See --help for more info"
+        print("See --help for more info")
         sys.exit(1)
 
     try:
         opts, args = getopt.getopt(argv, "hgo:p:", ["help","generate","output=","passphrase="])
     except getopt.GetoptError:
         usage()
-        print "See --help for more info"
+        print("See --help for more info")
         sys.exit(1)
 
     generate = False
@@ -88,13 +88,14 @@ def main(argv):
     words = mnemo.to_mnemonic(unhexlify(entropy))
 
     if outputtype == 'seed':
-        print hexlify(Mnemonic.to_seed(words, passphrase))
+        print(hexlify(Mnemonic.to_seed(words, passphrase)))
     elif outputtype == 'words':
-        print words
+        print(words)
     elif outputtype == 'entropy':
-        print hexlify(mnemo.to_entropy(words))
+        print(hexlify(mnemo.to_entropy(words)))
     else:
         sys.exit("Don't recognise output type " + outputtype)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+
